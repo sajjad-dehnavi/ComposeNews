@@ -52,6 +52,8 @@ kotlin = "1.9.0"
 
 kotlinxImmutableCollection = "0.3.5"
 
+material3 = "1.1.1"
+
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
 
@@ -62,9 +64,11 @@ compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
-compose-material = { group = "androidx.compose.material", name = "material" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
 compose-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "composeCoil" }
+compose-material = { group = "androidx.compose.material", name = "material" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }

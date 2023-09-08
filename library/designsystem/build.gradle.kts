@@ -13,5 +13,7 @@ dependencies {
         api(bundles.compose)
         api(compose.coil)
         api(lifecycle.runtime.compose)
+        api(libs.material3)
+        api(libs.material3.window.size)
     }
 }

@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -94,11 +94,11 @@ private fun MarketDetailScreen(
                     ) {
                         Text(
                             text = marketDetailState.market?.name ?: "--",
-                            style = MaterialTheme.typography.h5
+                            style = MaterialTheme.typography.headlineMedium
                         )
                         Text(
                             text = "${marketDetailState.market?.currentPrice} $",
-                            style = MaterialTheme.typography.body1
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
@@ -112,7 +112,7 @@ private fun MarketDetailScreen(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
             onClick = {},
-            backgroundColor = Color.White,
+            containerColor = Color.White,
         ) {
             FavoriteIcon(isFavorite = marketDetailState.market?.isFavorite ?: false) {
                 onFavoriteClick(marketDetailState.market)
@@ -126,7 +126,7 @@ private fun MarketDetailScreen(
 @Composable
 private fun MarketDetailScreenPrev(
     @PreviewParameter(MarketDetailStateProvider::class)
-    marketDetailState: MarketDetailContract.State
+    marketDetailState: MarketDetailContract.State,
 ) {
     ComposeNewsTheme {
         Surface {
