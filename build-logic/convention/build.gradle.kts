@@ -30,6 +30,8 @@ java {
 dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
+    compileOnly(libs.ktlint.kotlinter)
 }
 
 gradlePlugin {
@@ -55,13 +57,21 @@ gradlePlugin {
             id = "composenews.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
-        register("androidPresentationLayer") {
-            id = "composenews.android.feature.presentation"
-            implementationClass = "AndroidPresentationLayerConventionPlugin"
+        register("androidFeature") {
+            id = "composenews.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
         }
         register("androidRoom") {
             id = "composenews.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("androidDetekt") {
+            id = "composenews.android.detekt"
+            implementationClass = "AndroidDetektConventionPlugin"
+        }
+        register("androidKtlint") {
+            id = "composenews.android.ktlint"
+            implementationClass = "AndroidKotlinterConventionPlugin"
         }
     }
 }

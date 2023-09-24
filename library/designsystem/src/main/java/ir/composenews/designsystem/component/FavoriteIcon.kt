@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package ir.composenews.designsystem.component
 
 import androidx.compose.animation.animateColor
@@ -14,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,14 +34,13 @@ fun FavoriteIcon(
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
 ) {
-
     val animationState by remember(isFavorite) { mutableStateOf(isFavorite) }
 
     val favoriteTransition =
         updateTransition(targetState = animationState, label = "favorite_animation_state")
 
     val colorTintFavorite by favoriteTransition.animateColor(label = "favorite_color") { state ->
-        if (state) MaterialTheme.colorScheme.error else Color.LightGray
+        if (state) Color.Red else Color.LightGray
     }
 
     val scale by favoriteTransition.animateFloat(
@@ -56,11 +56,10 @@ fun FavoriteIcon(
                 tween(durationMillis = 300, easing = LinearEasing)
             }
         },
-        label = "favorite_scale"
+        label = "favorite_scale",
     ) { state ->
         if (state) 1f else 1f
     }
-
 
     Icon(
         imageVector = Icons.Filled.Favorite,
@@ -69,13 +68,13 @@ fun FavoriteIcon(
         modifier = Modifier
             .graphicsLayer(
                 scaleX = scale,
-                scaleY = scale
+                scaleY = scale,
             )
             .clip(CircleShape)
             .clickable {
                 onFavoriteClick()
             }
-            .padding(8.dp)
+            .padding(8.dp),
     )
 }
 

@@ -17,7 +17,7 @@ fun BottomNavigationBar(
 ) {
     NavigationBar(
         modifier = modifier,
-        tonalElevation = 5.dp
+        tonalElevation = 15.dp,
     ) {
         items.forEach { item ->
             val selected = item.route == currentScreenRoute

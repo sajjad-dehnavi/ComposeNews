@@ -14,22 +14,21 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import ir.composenews.base.BaseRoute
-import ir.composenews.base.BaseViewModel
+import ir.composenews.base.use
 import ir.composenews.designsystem.component.FavoriteIcon
 import ir.composenews.designsystem.component.QuadLineChart
 import ir.composenews.designsystem.preview.ThemePreviews
 import ir.composenews.designsystem.theme.ComposeNewsTheme
-import ir.composenews.base.use
 import ir.composenews.domain.model.Market
 import ir.composenews.marketdetail.preview_provider.MarketDetailStateProvider
 
@@ -37,7 +36,6 @@ import ir.composenews.marketdetail.preview_provider.MarketDetailStateProvider
 fun MarketDetailRoute(
     market: Market?,
     viewModel: MarketDetailViewModel = hiltViewModel(),
-    onProvideBaseViewModel: (baseViewModel: BaseViewModel) -> Unit,
 ) {
     val (state, event) = use(viewModel = viewModel)
 
@@ -46,10 +44,6 @@ fun MarketDetailRoute(
         market?.let {
             event.invoke(MarketDetailContract.Event.GetMarketChart(marketId = market.id))
         }
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        onProvideBaseViewModel(viewModel)
     }
 
     BaseRoute(baseViewModel = viewModel) {
@@ -68,37 +62,36 @@ private fun MarketDetailScreen(
     onFavoriteClick: (market: Market?) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Row(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
                         painter = rememberAsyncImagePainter(model = marketDetailState.market?.imageUrl),
                         contentDescription = marketDetailState.market?.name,
                         modifier = Modifier
                             .size(48.dp)
-                            .clip(CircleShape)
+                            .clip(CircleShape),
                     )
                     Column(
-                        modifier = Modifier.weight(1F)
+                        modifier = Modifier.weight(1F),
                     ) {
                         Text(
                             text = marketDetailState.market?.name ?: "--",
-                            style = MaterialTheme.typography.headlineMedium
+                            style = MaterialTheme.typography.headlineSmall,
                         )
                         Text(
                             text = "${marketDetailState.market?.currentPrice} $",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     }
                 }
@@ -112,14 +105,12 @@ private fun MarketDetailScreen(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
             onClick = {},
-            containerColor = Color.White,
         ) {
             FavoriteIcon(isFavorite = marketDetailState.market?.isFavorite ?: false) {
                 onFavoriteClick(marketDetailState.market)
             }
         }
     }
-
 }
 
 @ThemePreviews

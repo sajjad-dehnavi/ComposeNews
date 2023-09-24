@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber", "LongMethod")
+
 package ir.composenews.designsystem.component
 
 import android.graphics.Paint
@@ -66,23 +68,23 @@ fun QuadLineChart(
         modifier = Modifier
             .fillMaxWidth()
             .height(400.dp)
-            .padding(20.dp)
+            .padding(20.dp),
     ) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
+                .height(400.dp),
         ) {
             val spacePerHour = (size.width - spacing) / data.size
             val priceStep = (upperValue - lowerValue) / 5f
 
-            (0..4).forEach { i ->
+            repeat(5) { i ->
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
                         round(lowerValue + priceStep * i).toString(),
                         30f,
                         size.height - spacing - i * size.height / 5f,
-                        textPaint
+                        textPaint,
                     )
                 }
             }
@@ -122,8 +124,8 @@ fun QuadLineChart(
                     color = graphColor,
                     style = Stroke(
                         width = 2.dp.toPx(),
-                        cap = StrokeCap.Round
-                    )
+                        cap = StrokeCap.Round,
+                    ),
                 )
 
                 drawPath(
@@ -133,13 +135,11 @@ fun QuadLineChart(
                             lightGraphColor,
                             Color.Transparent,
                         ),
-                        endY = size.height - spacing
-                    )
+                        endY = size.height - spacing,
+                    ),
                 )
             }
-
         }
-
     }
 }
 
@@ -156,7 +156,7 @@ fun QuadLineChartPreview() {
                     Pair(3, 6.1),
                     Pair(4, 7.2),
                     Pair(5, 3.0),
-                )
+                ),
             )
         }
     }

@@ -1,58 +1,23 @@
-package ir.composenews.designsystem.theme
-//
-//import androidx.compose.foundation.isSystemInDarkTheme
-//import androidx.compose.material.MaterialTheme
-//import androidx.compose.material.darkColors
-//import androidx.compose.material.lightColors
-//import androidx.compose.runtime.Composable
-//import androidx.compose.ui.graphics.Color
-//
-//private val DarkColorPalette = darkColors(
-//    primary = Red300,
-//    primaryVariant = Red700,
-//    onPrimary = Color.Black,
-//    secondary = Red300,
-//    onSecondary = Color.Black,
-//    error = Red200,
-//)
-//
-//private val LightColorPalette = lightColors(
-//    primary = Red700,
-//    primaryVariant = Red900,
-//    onPrimary = Color.White,
-//    secondary = Red700,
-//    secondaryVariant = Red900,
-//    onSecondary = Color.White,
-//    error = Red800,
-//)
-//
-//@Composable
-//fun ComposeNewsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-//    val colors = if (darkTheme) {
-//        DarkColorPalette
-//    } else {
-//        LightColorPalette
-//    }
-//
-//    MaterialTheme(
-//        colors = colors,
-//        typography = Typography,
-//        shapes = Shapes,
-//        content = content
-//    )
-//}
-//
-//
-//package com.example.compose
+@file:Suppress("AnnotationOnSeparateLine", "NoConsecutiveBlankLines", "SpacingAroundComma")
 
+package ir.composenews.designsystem.theme
+
+import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
-
-private val LightColors = lightColorScheme(
+private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -77,15 +42,14 @@ private val LightColors = lightColorScheme(
     onSurfaceVariant = md_theme_light_onSurfaceVariant,
     outline = md_theme_light_outline,
     inverseOnSurface = md_theme_light_inverseOnSurface,
-    inverseSurface = md_theme_light_inverseSurface,
     inversePrimary = md_theme_light_inversePrimary,
-    surfaceTint = md_theme_light_surfaceTint,
+    inverseSurface = md_theme_light_inverseSurface,
     outlineVariant = md_theme_light_outlineVariant,
     scrim = md_theme_light_scrim,
+    surfaceTint = md_theme_light_surfaceTint,
 )
 
-
-private val DarkColors = darkColorScheme(
+private val DarkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -110,26 +74,48 @@ private val DarkColors = darkColorScheme(
     onSurfaceVariant = md_theme_dark_onSurfaceVariant,
     outline = md_theme_dark_outline,
     inverseOnSurface = md_theme_dark_inverseOnSurface,
-    inverseSurface = md_theme_dark_inverseSurface,
     inversePrimary = md_theme_dark_inversePrimary,
-    surfaceTint = md_theme_dark_surfaceTint,
+    inverseSurface = md_theme_dark_inverseSurface,
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
+    surfaceTint = md_theme_dark_surfaceTint,
 )
 
 @Composable
 fun ComposeNewsTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit,
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = true,
+    content:
+    @Composable()
+    () -> Unit,
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        useDarkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+    val view = LocalView.current
+    if (view.isInEditMode.not()) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                useDarkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
+                useDarkTheme.not()
+            window.navigationBarColor = colorScheme.background.toArgb()
+        }
     }
 
     MaterialTheme(
-        colorScheme = colors,
-        content = content
+        colorScheme = colorScheme,
+        typography = Typography,
+        shapes = Shapes,
+        content = content,
     )
 }

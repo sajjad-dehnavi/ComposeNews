@@ -3,9 +3,9 @@ package ir.composenews.designsystem.widget
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -18,11 +18,11 @@ fun ErrorView(errorMessage: String) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Text(
             text = errorMessage,
-            color = MaterialTheme.colors.error,
+            color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .wrapContentSize()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         )
     }
 }
