@@ -34,12 +34,8 @@ internal fun Project.configureAndroidCompose(
         dependencies {
             val bom = libs.findLibrary("compose-bom").get()
             val composeCompiler = libs.findLibrary("compose-compiler").get()
-            val material3 = libs.findLibrary("material3").get()
-            val material3WindowSize = libs.findLibrary("material3.window.size").get()
             add("implementation", platform(bom))
             add("implementation", composeCompiler)
-            add("implementation", material3)
-            add("implementation", material3WindowSize)
             add("androidTestImplementation", platform(bom))
         }
 
