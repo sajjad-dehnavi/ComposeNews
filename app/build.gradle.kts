@@ -45,7 +45,5 @@ dependencies {
         androidTestImplementation(junit.ext)
         implementation(work.runtime.ktx)
         implementation(libs.hilt.navigation.compose)
-        implementation(libs.material3)
-        implementation(libs.material3.window.size)
     }
 }

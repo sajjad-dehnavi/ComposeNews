@@ -28,7 +28,5 @@ dependencies {
         testImplementation(junit)
         testImplementation(coroutines.test)
         testImplementation(mokito.kotlin)
-        implementation(libs.material3)
-        implementation(libs.material3.window.size)
     }
 }
